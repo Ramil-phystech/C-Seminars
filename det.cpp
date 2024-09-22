@@ -18,6 +18,7 @@ int Det(double* a, int c) {
     for (int i = 0; i < c; ++i) {
         d *= a[i * c + i];
     };
+    delete[] a;
     return d;
 };
 
