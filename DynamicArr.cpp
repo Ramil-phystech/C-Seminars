@@ -57,7 +57,7 @@ DynamicArr& DynamicArr::operator=(const DynamicArr& rhs){
 	capacity_ = rhs.capacity_;
 	arr_ = new double[capacity_];
 
-	for (int i = 0; i < size_; ++i) {
+	for (size_t i = 0; i < size_; ++i) {
 		arr_[i] = rhs.arr_[i];
 	}
 
