@@ -1,37 +1,37 @@
 #include <iostream>
 #include "pointer.h"
+#include <memory>
 
-class A {
+class TestClass {
+    int value_ = 0;
 public:
-    int a = 0;
-    int b = 0;
-
-    A(int a_, int b_) {
-        a = a_;
-        b = b_;
+    TestClass(int value) : value_(value) {
+        std::cout << "Constructing" << std::endl;
     }
 
-    A(const A &rhs) {
-        a = rhs.a;
-        b = rhs.b;
+    ~TestClass() {
+        std::cout << "Destructing" << std::endl;
     }
 
-    void Meow() {
-        std::cout << "Meow" << std::endl;
+    int GetValue() const {
+        return value_;
     }
 };
 
 int main() {
-    A a2 = A(2, 3);
-    Shared_ptr<A> p = a2;
-    Shared_ptr<A> q = p;
-
-    std::cout << q->a << std::endl;
-    std::cout << p->b << std::endl;
-
-    q->Meow();
-
-    std::cout << (*q).a << std::endl;
-
+    {
+        Shared_ptr<TestClass> p1;
+        {
+            Shared_ptr<TestClass> p2 = MakeShared<TestClass>(5);
+            std::cout << p2.GetRefCount() << std::endl;
+            p1 = p2;
+            std::cout << p1.GetRefCount() << std::endl;
+            std::cout << p2.GetRefCount() << std::endl;
+        }
+        std::cout << p1.GetRefCount() << std::endl;
+        std::cout << "Value: " << p1->GetValue() << std::endl;
+        std::cout << "Befor delete TestClass obj" << std::endl;
+    }
+    std::cout << "After delete TestClass obj" << std::endl;
     return 0;
 }
